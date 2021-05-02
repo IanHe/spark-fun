@@ -1,0 +1,7 @@
+
+
+###Data Frames (or DFs)
+![img of 001](imgs/001.png)
+![img of 002](imgs/002.png)
+![img of 003](imgs/003.png)
+![img of 004](imgs/004.png)
