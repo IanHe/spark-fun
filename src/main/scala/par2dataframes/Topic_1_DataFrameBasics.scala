@@ -14,7 +14,7 @@ object Topic_1_DataFrameBasics extends App {
   //  val firstDF = spark.read.json("src/main/resources/data/cars.json")
   val firstDF = spark.read
     .format("json")
-    .option("inferSchema", "true")
+    .option("inferSchema", "true") // the default "inferSchema" will read all number as Long
     .load("src/main/resources/data/cars.json")
 
   // showing a DF
