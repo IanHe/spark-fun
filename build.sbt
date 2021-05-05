@@ -1,4 +1,4 @@
-name := "SparkFun"
+name := "spark-essentials-fun"
 
 version := "0.1"
 
