@@ -3,3 +3,4 @@ target/*
 .idea/*
 .bsp/*
 src/main/resources/warehouse/*
+out/*
