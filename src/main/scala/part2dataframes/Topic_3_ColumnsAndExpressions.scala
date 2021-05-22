@@ -1,4 +1,4 @@
-package par2dataframes
+package part2dataframes
 
 import org.apache.spark.sql.functions.{col, column, expr}
 import org.apache.spark.sql.{Column, SparkSession}
