@@ -66,13 +66,15 @@ object Topic_1_DataFrameBasics extends App {
     ("amc ambassador dpl",15,8,390,190,3850,8.5,"1970-01-01","USA")
   )
   val manualCarsDF = spark.createDataFrame(cars) // schema auto-inferred
+//  manualCarsDF.show()
+//  manualCarsDF.printSchema()
 
   // note: DFs have schemas, rows do not
 
   // create DFs with implicits
   import spark.implicits._
   val manualCarsDFWithImplicits = cars.toDF("Name", "MPG", "Cylinders", "Displacement", "HP", "Weight", "Acceleration", "Year", "CountryOrigin")
-
+//  manualCarsDFWithImplicits.printSchema()
 
   /**
    * Exercise:

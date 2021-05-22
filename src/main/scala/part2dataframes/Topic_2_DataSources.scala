@@ -101,7 +101,7 @@ object Topic_2_DataSources extends App {
        CSV specific options
        - header: whether the header is in the csv file
        - sep: seperator used in the csv file, default is ","
-       - nullValue: CSV does not has null, so the parse will parse nullValue to this option specified value
+       - nullValue: CSV does not has null, so the parser will parse nullValue to this option specified value
      */
     .option("header", "true")
     .option("sep", ",")

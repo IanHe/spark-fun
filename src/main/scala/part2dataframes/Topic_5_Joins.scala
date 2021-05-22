@@ -1,7 +1,7 @@
 package part2dataframes
 
 import org.apache.spark.sql.functions._
-import org.apache.spark.sql.{Column, SparkSession}
+import org.apache.spark.sql.{Column, DataFrame, SparkSession}
 
 /*
   Joins are Wide Transformation
@@ -41,7 +41,7 @@ object Topic_5_Joins extends App {
   // semi-joins: inner join records but only show left table columns
   guitaristsDF.join(bandsDF, joinCondition, "left_semi")
 
-  // anti-joins, left_out join - inner join and only show left table columns
+  // anti-joins, (left_out join records deduct inner join records) and only show left table columns
   guitaristsDF.join(bandsDF, joinCondition, "left_anti")
 
   // this crashes: ambiguous - both guitars and guitarPlayers have id column
@@ -73,7 +73,7 @@ object Topic_5_Joins extends App {
   val user = "docker"
   val password = "docker"
 
-  def readTable(tableName: String) = spark.read
+  def readTable(tableName: String): DataFrame = spark.read
     .format("jdbc")
     .option("driver", driver)
     .option("url", url)

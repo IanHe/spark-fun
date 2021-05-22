@@ -40,14 +40,15 @@ object Topic_3_ColumnsAndExpressions extends App {
   carsDF.select("Name", "Year")
 
   // EXPRESSIONS
-  val simpleExpression = carsDF.col("Weight_in_lbs")
+  val simpleExpression: Column = carsDF.col("Weight_in_lbs")
   val weightInKgExpression: Column = simpleExpression / 2.2
+  val weightInKgExpressionV2: Column = expr("Weight_in_lbs / 2.2").as("Weight_in_kg_2")
 
   val carsWithWeightDF = carsDF.select(
     col("Name"),
     col("Weight_in_lbs"),
     weightInKgExpression.as("Weight_in_kg"),
-    expr("Weight_in_lbs / 2.2").as("Weight_in_kg_2")
+    weightInKgExpressionV2
   )
   //  carsWithWeightDF.show()
 
