@@ -28,7 +28,7 @@ object Topic_4_Datasets extends App {
 
   // convert a DF to a Dataset
   implicit val intEncoder = Encoders.scalaInt
-  val numbersDS: Dataset[Int] = numbersDF.as[Int]
+  val numbersDS: Dataset[Int] = numbersDF.as[Int] // Dataset[Row] -> Dataset[Int]
   numbersDS.filter(_ < 100)
 
   // dataset of a complex type
@@ -59,7 +59,7 @@ object Topic_4_Datasets extends App {
     .schema(schema) // some schema has complex attribute type like Date, so specify the schema is quite important for parsing
     .json(s"src/main/resources/data/$filename")
 
-  val carSchema = Encoders.product[Car].schema
+  val carSchema: StructType = Encoders.product[Car].schema
   val carsDF = readWithSchemaDF("cars.json", carSchema)
 
   // 3 - define an encoder (importing the implicits)

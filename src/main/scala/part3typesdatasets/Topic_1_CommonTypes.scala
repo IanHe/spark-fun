@@ -1,6 +1,6 @@
 package part3typesdatasets
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Column, SparkSession}
 import org.apache.spark.sql.functions._
 
 object Topic_1_CommonTypes extends App {
@@ -81,7 +81,7 @@ object Topic_1_CommonTypes extends App {
     .drop("regex_extract")
 
   // version 2 - contains
-  val carNameFilters = getCarNames.map(_.toLowerCase()).map(name => col("Name").contains(name))
+  val carNameFilters: List[Column] = getCarNames.map(_.toLowerCase()).map(name => col("Name").contains(name))
   val bigFilter = carNameFilters.foldRight(lit(false))((combinedFilter, newCarNameFilter) => combinedFilter or newCarNameFilter)
   carsDF.filter(bigFilter)
 }
