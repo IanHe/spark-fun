@@ -22,6 +22,7 @@ object Topic_1_RDDs extends App {
   // 2 - reading from files
   case class StockValue(symbol: String, date: String, price: Double)
 
+  // here the source will keep open because there are actions below will continue operate on it
   def readStocks(fileName: String): Seq[StockValue] = Source.fromFile(fileName)
     .getLines()
     .drop(1) // drop the header row in csv
@@ -47,6 +48,7 @@ object Topic_1_RDDs extends App {
 
   val stocksDS: Dataset[StockValue] = stocksDF.as[StockValue]
   val stocksRDD3: RDD[StockValue] = stocksDS.rdd
+  //  stocksRDD3.toDF().show()
 
   // RDD -> DF
   // specify the column name for multiple columns
@@ -119,15 +121,15 @@ object Topic_1_RDDs extends App {
       col("IMDB_Rating").as("rating")
     )
     .where(col("genre").isNotNull and col("rating").isNotNull)
-    .as[Movie]
-    .rdd
+    .as[Movie] // Dataset[Movie]
+    .rdd // RDD[Movie]
 
   // 2. Show the distinct genres as an RDD.
   val genresRDD: RDD[String] = moviesRDD.map(_.genre).distinct()
 
   // 3. Select all the movies in the Drama genre with IMDB rating > 6.
   val goodDramasRDD = moviesRDD.filter(movie => movie.genre == "Drama" && movie.rating > 6)
-  // one way to show the RDd
+  // one way to show the RDD
   //  goodDramasRDD.toDF().show()
 
   // 4. Show the average rating of movies by genre.
