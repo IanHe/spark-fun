@@ -9,9 +9,10 @@ object Topic_1_SparkShell extends App{
    *
    * To setup the Spark cluster in Docker:
    *
-   *   1. Build the Docker containers
+   *   1. Go to spark-cluster folder
+   *   2. Build the Docker containers
    *       ./build-images.sh
-   *   2. Start a cluster with one master and 3 workers
+   *   3. Start a cluster with one master and 3 workers
    *       docker-compose up --scale spark-worker=3
    *
    * To open the Spark SQL shell in the master container:

@@ -11,19 +11,19 @@ object Topic_2_SparkSql extends App {
     .appName("Spark SQL Practices")
     .config("spark.master", "local")
     .config("spark.sql.warehouse.dir", "src/main/resources/warehouse")
-    // for Spark 2.4 users to allow overwrite tables: (Note: Spark 3 has to set 'path' option when save the table)
+    // for Spark 2.4 users to allow overwrite tables: (Note: Spark 3 has to set 'path' option when overwrite and save the table)
     // .config("spark.sql.legacy.allowCreatingManagedTableUsingNonemptyLocation", "true")
     .getOrCreate()
 
-  val cardDF = spark.read
+  val carsDF = spark.read
     .option("inferSchema", "true")
     .json("src/main/resources/data/cars.json")
 
   // regular DF API
-  cardDF.select(col("Name")).where(col("Origin") === "USA")
+  carsDF.select(col("Name")).where(col("Origin") === "USA")
 
   // use Spark SQL
-  cardDF.createOrReplaceTempView("cars") // create an alias "cars" and refer it as a Table
+  carsDF.createOrReplaceTempView("cars") // create an alias "cars" and refer it as a Table
   val americanCarsDF = spark.sql(
     """
       | select Name, Origin from cars where Origin = 'USA'
@@ -53,7 +53,7 @@ object Topic_2_SparkSql extends App {
     .option("dbtable", s"public.$tableName")
     .load()
 
-  def transferTables(tableNames: Seq[String], shouldWriteToWarehouse: Boolean = false) = tableNames.foreach { tableName =>
+  def loadAndSaveToSparkTable(tableNames: Seq[String], shouldWriteToWarehouse: Boolean = false) = tableNames.foreach { tableName =>
     val tableDF = readTable(tableName)
     tableDF.createOrReplaceTempView(tableName)
     if(shouldWriteToWarehouse){
@@ -102,7 +102,7 @@ object Topic_2_SparkSql extends App {
 
   // 2. Count how many employees were hired in between Jan 1 1999 and Jan 1 2000.
   // require to loadTable and create view for employees
-  transferTables(Seq("employees"))
+  loadAndSaveToSparkTable(Seq("employees"))
   spark.sql(
     """
       |select count(*)
@@ -113,7 +113,7 @@ object Topic_2_SparkSql extends App {
 
   // 3. Show the average salaries for the employees hired in between those dates, grouped by department.
   // require to load tables and create views
-  transferTables(Seq("employees", "dept_emp", "salaries"))
+  loadAndSaveToSparkTable(Seq("employees", "dept_emp", "salaries"))
   spark.sql(
     """
       |select de.dept_no, avg(s.salary)
@@ -127,7 +127,7 @@ object Topic_2_SparkSql extends App {
 
   // 4. Show the name of the best-paying department for employees hired in between those dates.
   // require to load tables and create views
-  transferTables(Seq("employees", "dept_emp", "salaries", "departments"))
+  loadAndSaveToSparkTable(Seq("employees", "dept_emp", "salaries", "departments"))
   spark.sql(
     """
       |select avg(s.salary) payments, d.dept_name
