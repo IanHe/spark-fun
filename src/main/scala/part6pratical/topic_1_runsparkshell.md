@@ -12,7 +12,7 @@
 ![image of 002](imgs/topic1/002.png)
 <br></br>
 ![image of 003](imgs/topic1/003.png)
-####the count job will be showing at the Spark Console
+####the count job will be showing at the Spark Console at localhost:4040
 ![image of 004](imgs/topic1/004.png)
 ####Click the description, will show Details for Job with completed Stages
 ####There are 8 tasks which is 8 partitions
@@ -45,7 +45,7 @@
 <br></br>
 ####run physical plan to explain the steps and splits(partitions)
 ####a physical plan describes all the operations that spark will do to compute the dataset
-####splits =8 means spark will do 8 partitions for this dataset
+####splits=8 means spark will do 8 partitions for this dataset
 ![image of 018](imgs/topic1/018.png)
 <br></br>
 ####Lets creat a new dataset ds2 by using 5 steps
